@@ -32,13 +32,12 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     padding: "30px",
     borderRadius: "10px",
-    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)", // Add shadow effect
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
     backgroundColor: "#f5f5f5",
-    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
     transition: "transform 1s, box-shadow 1s",
     "&:hover": {
-      transform: "translateX(-12px)",
-      boxShadow: "0px 12px 20px rgba(0, 0, 0, 0.2)",
+      transform: "translateY(0px)",
+      boxShadow: "0px 12px 20px rgba(0, 0, 0, 1)",
     },
   },
   title: {

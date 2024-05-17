@@ -7,22 +7,23 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {
-  Home,
-  Info,
-  ContactMail,
-} from "@material-ui/icons";
+import { Home, Info, ContactMail } from "@material-ui/icons";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
+  const { isAuthenticated } = useUser();
   return (
-    <AppBar position="fixed" style={{ backgroundColor: "#333",height:"100px" }}>
+    <AppBar
+      position="fixed"
+      style={{ backgroundColor: "#333", height: "100px" }}
+    >
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton edge="start" color="inherit" aria-label="logo">
           <EventAvailableIcon />
         </IconButton>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          EMS
+          Global-Blog
         </Typography>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
@@ -46,24 +47,30 @@ const Navbar = () => {
           >
             Contact
           </Button>
-          <Link to="/signup">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginLeft: "10px", backgroundColor: "#4CAF50" }}
-            >
-              Sign Up
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button
-              variant="contained"
-              color="inherit"
-              style={{ marginLeft: "10px", border: "2px solid white" }}
-            >
-              Login
-            </Button>
-          </Link>
+          {!isAuthenticated && 
+            <>
+              
+              <Link to="/signup">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ marginLeft: "10px", backgroundColor: "#4CAF50" }}
+                >
+                  Sign Up
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  style={{ marginLeft: "10px", border: "2px solid white" }}
+                >
+                  Login
+                </Button>
+              </Link>
+              
+            </>
+          }
         </div>
       </Toolbar>
     </AppBar>

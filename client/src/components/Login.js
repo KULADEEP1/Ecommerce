@@ -16,7 +16,8 @@ import {
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { loginAPI } from "../utils/api";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -70,6 +71,7 @@ const CustomTextField = withStyles(styles)(TextField);
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { login } = useUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,15 +86,18 @@ const Login = () => {
 
       if (response.status === 201) {
         toast.success("Login successful");
-        console.log(response);
-        navigate("/Homepage");
+        const { token, user } = response.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        login(user, token);
+        navigate("/");
       } else {
-        toast.error("Signup failed");
+        toast.error("Login failed");
         navigate("/login");
       }
     } catch (error) {
-      console.error("There was an error loging in!", error);
-      toast.error("There was an error loging in!");
+      console.error("There was an error logging in!", error);
+      toast.error("There was an error logging in!");
     }
   };
 
@@ -144,7 +149,7 @@ const Login = () => {
         </Button>
         <div className={classes.linkContainer}>
           <span>Don't have an account? </span>
-          <Link to="/signup" style={{textDecoration:"none",color:"blue"}}>
+          <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>
             Sign up
           </Link>
         </div>

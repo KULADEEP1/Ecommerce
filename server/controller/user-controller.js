@@ -1,59 +1,67 @@
 const User = require("../models/user.js");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const signupUser = async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body;
 
     let exist = await User.findOne({ email });
     if (exist) {
-      return res.status(400).json({ msg: "User already Exist" });
+      return res.status(400).json({ msg: "User already exists" });
     }
     if (password !== confirmPassword) {
-      return res.status(400).json({ msg: "Passwords are not matching" });
+      return res.status(400).json({ msg: "Passwords do not match" });
     }
-    const user = {
+
+    const newUser = new User({
       username,
       email,
       password,
       confirmPassword,
-    };
-    const newUser = new User(user);
+    });
     await newUser.save();
 
-    return res.status(201).json({ msg: "signup Successfull" });
+    return res.status(201).json({ msg: "Signup Successful" });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ msg: "error while signup user " });
+    console.error(error);
+    return res.status(500).json({ msg: "Error while signing up user" });
   }
 };
+
 
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let exist = await User.findOne({ email });
-    if (!exist) {
-      return res.status(400).json({ msg: "user does not exist" });
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ msg: "User does not exist" });
     }
-    if (exist.password !== password) {
-      return res.status(400).json({ msg: "INVALID CREDENTIALS" });
+     if (user.password !== password) {
+      return res.status(400).json({ msg: "Invalid credentials" });
     }
-    let payload = {
+
+
+    // Generate JWT token with user data
+    const payload = {
       user: {
-        id: exist.id,
+        id: user.id,
+        username: user.username,
+        email: user.email,
       },
     };
-    jwt.sign(payload, "jwtSecretkey", { expiresIn: "15m" }, (err, token) => {
+    jwt.sign(payload, "jwtSecretkey", { expiresIn: "1h" }, (err, token) => {
       if (err) {
-        console.log(err);
-        res.status(500).json({ msg: "Error while login in user" });
+        console.error(err);
+        return res.status(500).json({ msg: "Error while logging in user" });
       }
-      return res.status(201).json({ token });
+      return res.status(201).json({ token,user });
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ msg: "Error while login in user" });
+    console.error(error);
+    return res.status(500).json({ msg: "Error while logging in user" });
   }
 };
+
 
 module.exports = { signupUser, loginUser };
