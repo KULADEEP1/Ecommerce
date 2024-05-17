@@ -3,7 +3,6 @@ import {
   Container,
   TextField,
   Button,
-  Link,
   Typography,
   withStyles,
   InputAdornment,
@@ -17,7 +16,7 @@ import {
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { loginAPI } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -145,8 +144,8 @@ const Login = () => {
         </Button>
         <div className={classes.linkContainer}>
           <span>Don't have an account? </span>
-          <Link href="#" color="primary">
-            Sign In
+          <Link to="/signup" style={{textDecoration:"none",color:"blue"}}>
+            Sign up
           </Link>
         </div>
       </form>

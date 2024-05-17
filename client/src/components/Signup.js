@@ -5,7 +5,6 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Link,
   Typography,
   withStyles,
   InputAdornment,
@@ -20,11 +19,11 @@ import {
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { signupAPI } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    marginTop: "10px",
+    marginTop: "45px",
     textAlign: "center",
   },
   form: {
@@ -35,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)", // Add shadow effect
     backgroundColor: "#f5f5f5",
+    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+    transition: "transform 1s, box-shadow 1s",
+    "&:hover": {
+      transform: "translateX(-12px)",
+      boxShadow: "0px 12px 20px rgba(0, 0, 0, 0.2)",
+    },
   },
   title: {
     marginBottom: "20px",
@@ -200,8 +205,8 @@ const Signup = () => {
         </Button>
         <div className={classes.linkContainer}>
           <span>Already have an account? </span>
-          <Link href="#" color="primary">
-            Sign In
+          <Link to="/login" style={{textDecoration:"none",color:"blue"}}>
+            Log In
           </Link>
         </div>
       </form>

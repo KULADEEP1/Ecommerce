@@ -29,7 +29,7 @@ const App = () => {
             pauseOnHover
           />
           <Routes>
-            <Route exact path="/" element={<Homepage />} />
+            <Route exact path="/homepage" element={<Homepage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Routes>
