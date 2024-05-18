@@ -53,6 +53,20 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
+  logoutButton: {
+    padding: theme.spacing(1, 2),
+    marginLeft: "10px",
+    borderRadius: theme.shape.borderRadius,
+    border: "2px solid #333",
+    textDecoration: "none",
+    backgroundColor: "red",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#b30000", // Darker shade of red
+      color: "#fff",
+    },
+  },
+  
 }));
 
 const Navbar = () => {
@@ -102,9 +116,9 @@ const Navbar = () => {
           </NavLink>
           {isAuthenticated ? (
             <Typography
-              variant="contained"
               color="secondary"
               onClick={handleLogout}
+              className={classes.logoutButton}
               style={{ marginLeft: "10px", cursor: "pointer" }}
             >
               Logout

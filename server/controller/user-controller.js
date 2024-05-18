@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
         email: user.email,
       },
     };
-    jwt.sign(payload, "jwtSecretkey", { expiresIn: "1h" }, (err, token) => {
+    jwt.sign(payload, "jwtSecretkey", { expiresIn: "360s" }, (err, token) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ msg: "Error while logging in user" });
@@ -62,6 +62,5 @@ const loginUser = async (req, res) => {
     return res.status(500).json({ msg: "Error while logging in user" });
   }
 };
-
 
 module.exports = { signupUser, loginUser };

@@ -118,6 +118,9 @@ function HomePage() {
     if (isAuthenticated === false) {
       navigate("/login");
     }
+    else{
+      navigate("/create");
+    }
   };
 
   return (

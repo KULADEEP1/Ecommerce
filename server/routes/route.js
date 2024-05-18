@@ -1,13 +1,16 @@
 const express = require("express");
 const User = require("../models/user.js");
 const { signupUser, loginUser } = require("../controller/user-controller.js");
+const { createBlog } = require("../controller/blog-controller.js");
 const validateToken = require("../middleware.js");
-
+const jwt=require('jsonwebtoken')
 const router = express.Router();
 
 router.post("/signup", signupUser);
 
 router.post("/login", loginUser);
+
+router.post("/create", createBlog);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
@@ -15,11 +18,28 @@ router.post("/validate-token", validateToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(201).json({ isValid: true, user });
+    const decodedToken = jwt.decode(req.token); // Decode the token
+   
+    const expiryTime = decodedToken.exp; // Extract expiration time
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    const timeLeft = expiryTime - currentTime; // Calculate remaining time
+    res.status(201).json({ isValid: true, user, timeLeft });
   } catch (error) {
     console.error("Error fetching user:", error);
     res.status(500).json({ message: "Server error", isValid: false });
   }
 });
 
+router.post("/refresh-token", validateToken, async (req, res) => {
+  const user = req.user;
+  const payload = {
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    },
+  };
+  const accessToken = jwt.sign(payload, "jwtSecretkey", { expiresIn: "360s" });
+  return res.status(201).json({ accessToken, user });
+});
 module.exports = router;
