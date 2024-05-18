@@ -14,6 +14,8 @@ import {
   CssBaseline,
 } from "@material-ui/core";
 import Footer from "./Footer";
+import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -110,6 +112,13 @@ const useStyles = makeStyles((theme) => ({
 
 function HomePage() {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
+  const handleCreateBlog = () => {
+    if (isAuthenticated === false) {
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -135,6 +144,7 @@ function HomePage() {
               <Button
                 variant="contained"
                 className={classes.exploreButton}
+                onClick={handleCreateBlog}
                 startIcon={<CreateIcon />}
               >
                 Create Blog

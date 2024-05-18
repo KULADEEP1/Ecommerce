@@ -27,11 +27,16 @@ const useStyles = makeStyles((theme) => ({
   form: {
     maxWidth: "500px",
     maxHeight: "600px",
-    margin: "0 auto",
+    margin: "50px auto",
     padding: "30px",
     borderRadius: "10px",
     boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)", // Add shadow effect
     backgroundColor: "#f5f5f5",
+    transition: "transform 1s, box-shadow 1s",
+    "&:hover": {
+      transform: "translateY(0px)",
+      boxShadow: "0px 12px 20px rgba(0, 0, 0, 1)",
+    },
   },
   title: {
     marginBottom: "20px",

@@ -1,76 +1,124 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Home, Info, ContactMail } from "@material-ui/icons";
-import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { useUser } from "../context/UserContext";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    backgroundColor: "#333",
+    height: "100px",
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
+    marginLeft: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+  },
+  activeLink: {
+    color: "#4CAF50",
+    borderBottom: "2px solid #4CAF50",
+  },
+  buttonText: {
+    marginLeft: theme.spacing(1),
+  },
+  signupButton: {
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    marginLeft: "10px",
+    padding: theme.spacing(1, 2),
+    borderRadius: theme.shape.borderRadius,
+    "&:hover": {
+      backgroundColor: "#388E3C", // Darker shade of green
+    },
+    textDecoration: "none",
+  },
+  loginButton: {
+    padding: theme.spacing(1, 2),
+    marginLeft: "10px",
+    borderRadius: theme.shape.borderRadius,
+    border: "2px solid #333",
+    textDecoration: "none",
+    backgroundColor: "#555",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#777",
+      color: "#fff",
+    },
+  },
+}));
 
 const Navbar = () => {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, logout } = useUser();
+  const navigate = useNavigate();
+  const classes = useStyles();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
-    <AppBar
-      position="fixed"
-      style={{ backgroundColor: "#333", height: "100px" }}
-    >
-      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-        <IconButton edge="start" color="inherit" aria-label="logo">
-          <EventAvailableIcon />
-        </IconButton>
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar className={classes.toolbar}>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           Global-Blog
         </Typography>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Button
-            color="inherit"
-            style={{ marginLeft: "10px" }}
-            startIcon={<Home />}
+          <NavLink
+            to="/"
+            exact
+            className={({ isActive }) =>
+              `${classes.link} ${isActive ? classes.activeLink : ""}`
+            }
           >
-            Home
-          </Button>
-          <Button
-            color="inherit"
-            style={{ marginLeft: "10px" }}
-            startIcon={<Info />}
+            <Home />
+            <Typography className={classes.buttonText}>Home</Typography>
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `${classes.link} ${isActive ? classes.activeLink : ""}`
+            }
           >
-            About
-          </Button>
-          <Button
-            color="inherit"
-            style={{ marginLeft: "10px" }}
-            startIcon={<ContactMail />}
+            <Info />
+            <Typography className={classes.buttonText}>About</Typography>
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `${classes.link} ${isActive ? classes.activeLink : ""}`
+            }
           >
-            Contact
-          </Button>
-          {!isAuthenticated && 
+            <ContactMail />
+            <Typography className={classes.buttonText}>Contact</Typography>
+          </NavLink>
+          {isAuthenticated ? (
+            <Typography
+              variant="contained"
+              color="secondary"
+              onClick={handleLogout}
+              style={{ marginLeft: "10px", cursor: "pointer" }}
+            >
+              Logout
+            </Typography>
+          ) : (
             <>
-              
-              <Link to="/signup">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ marginLeft: "10px", backgroundColor: "#4CAF50" }}
-                >
-                  Sign Up
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button
-                  variant="contained"
-                  color="inherit"
-                  style={{ marginLeft: "10px", border: "2px solid white" }}
-                >
-                  Login
-                </Button>
-              </Link>
-              
+              <NavLink to="/signup" className={classes.signupButton}>
+                Sign Up
+              </NavLink>
+              <NavLink to="/login" className={classes.loginButton}>
+                Login
+              </NavLink>
             </>
-          }
+          )}
         </div>
       </Toolbar>
     </AppBar>
