@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   TextField,
@@ -76,25 +76,49 @@ const CustomTextField = withStyles(styles)(TextField);
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { login,isAuthenticated } = useUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // const handleLoginSubmit = async (e) => {
+
+  //   e.preventDefault();
+  //   try {
+  //     const response = await loginAPI({
+  //       email,
+  //       password,
+  //     });
+
+  //     if (response.status === 201) {
+  //       toast.success("Login successful");
+  //       const { token, user } = response.data;
+  //       localStorage.setItem("token", token);
+  //       localStorage.setItem("user", JSON.stringify(user));
+  //       login(user, token);
+  //       console.log(isAuthenticated)
+  //       navigate("/");
+  //     } else {
+  //       toast.error("Login failed");
+  //       navigate("/login");
+  //     }
+  //   } catch (error) {
+  //     console.error("There was an error logging in!", error);
+  //     toast.error("There was an error logging in!");
+  //   }
+  // };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginAPI({
-        email,
-        password,
-      });
+      const response = await loginAPI({ email, password });
 
       if (response.status === 201) {
         toast.success("Login successful");
         const { token, user } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        login(user, token);
+        login(user); // Call login with user data
         navigate("/");
       } else {
         toast.error("Login failed");

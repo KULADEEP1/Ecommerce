@@ -20,6 +20,18 @@ export const loginAPI = (data) => {
   return api.post("/login", data);
 };
 
+export const validateTokenAPI = (data) => {
+  return api.post("/validate-token",{}, {
+    headers: {
+      Authorization: `${data}`,
+    },
+  });
+};
 
-
-
+export const refreshTokenAPI = (data) => {
+  return api.post("/refresh-token",{}, {
+    headers: {
+      Authorization: `${data}`,
+    },
+  });
+};
