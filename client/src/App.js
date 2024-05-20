@@ -12,7 +12,7 @@ import About from "./components/About";
 import CreateBlog from "./components/Blogs/CreateBlog";
 import { validateTokenAPI, refreshTokenAPI } from "./utils/api";
 import ViewBlogs from "./components/Blogs/ViewBlogs";
-
+import ViewBlog from "./components/Blogs/ViewBlog";
 const App = () => {
   const { setAuthenticated } = useUser();
 
@@ -77,6 +77,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/create" element={<CreateBlog />} />
             <Route path="/viewall" element={<ViewBlogs />} />
+            <Route path="/viewblog/:id" element={<ViewBlog />} />
           </Routes>
         </Layout>
       </Router>

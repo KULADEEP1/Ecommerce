@@ -28,6 +28,19 @@ const getAllBlogs = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error while fetching blog posts" });
   }
-}; 
+};
 
-module.exports = { createBlog, getAllBlogs };
+const getBlogData = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    console.log(blog);
+    if (!blog) {
+      return res.status(404).json({ error: "Blog post not found" });
+    }
+    res.status(201).json(blog);
+  } catch (error) {
+    res.status(500).json({ error: "Error while fetching blog post" });
+  }
+};
+
+module.exports = { createBlog, getAllBlogs, getBlogData };

@@ -69,25 +69,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const {
-    isAuthenticated,
-    setAuthenticated,
-  } = useUser();
+  const { isAuthenticated, setAuthenticated } = useUser();
   const navigate = useNavigate();
   const classes = useStyles();
 
   const [redirect, setRedirect] = useState(false);
 
-  useEffect(() => {
-    if (redirect) {
-      navigate("/login");
-    }
-  }, [redirect, navigate]);
+  // useEffect(() => {
+  //   if (redirect) {
+  //     navigate("/login");
+  //   }
+  // }, [redirect, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setAuthenticated(false);
-    setRedirect(true);
+    navigate("/login");
+    // setRedirect(true);
   };
 
   return (

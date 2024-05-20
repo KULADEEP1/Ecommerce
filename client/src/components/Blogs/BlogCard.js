@@ -100,7 +100,7 @@ function BlogCard({ blog }) {
               variant="contained"
               color="primary"
               component={Link}
-              to={`/blog/${blog._id}`}
+              to={`/viewblog/${blog._id}`}
             >
               Read More
             </Button>

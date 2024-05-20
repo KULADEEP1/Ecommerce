@@ -1,12 +1,15 @@
 const express = require("express");
 const User = require("../models/user.js");
 const { signupUser, loginUser } = require("../controller/user-controller.js");
-const { createBlog,getAllBlogs } = require("../controller/blog-controller.js");
-const {validateToken} = require("../middleware.js");
+const {
+  createBlog,
+  getAllBlogs,
+  getBlogData,
+} = require("../controller/blog-controller.js");
+const { validateToken } = require("../middleware.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const multer = require("multer");
-
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -15,9 +18,16 @@ router.post("/signup", signupUser);
 
 router.post("/login", loginUser);
 
-router.post("/create",validateToken, upload.single("featuredImage"), createBlog);
+router.post(
+  "/create",
+  validateToken,
+  upload.single("featuredImage"),
+  createBlog
+);
 
-router.get("/getallblogs",getAllBlogs);
+router.get("/getallblogs", getAllBlogs);
+
+router.get("/viewblog/:id", getBlogData);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {

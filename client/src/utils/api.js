@@ -68,3 +68,13 @@ export const getBlogsDataAPI = async () => {
     throw error;
   }
 };
+
+export const getBlogDataAPI = async (id) => {
+  try {
+    const response = await api.get(`/viewblog/${id}`);
+    return response;
+  } catch (error) {
+    console.log("Error while fetching blog data", error);
+    throw error;
+  }
+};
