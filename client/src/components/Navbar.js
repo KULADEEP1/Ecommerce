@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: "#333",
-    height: "100px",
+    height: "80px",
   },
   toolbar: {
     display: "flex",

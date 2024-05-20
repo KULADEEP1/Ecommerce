@@ -21,4 +21,13 @@ const createBlog = async (req, res) => {
   }
 };
 
-module.exports = { createBlog };
+const getAllBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find();
+    res.status(201).json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: "Error while fetching blog posts" });
+  }
+}; 
+
+module.exports = { createBlog, getAllBlogs };

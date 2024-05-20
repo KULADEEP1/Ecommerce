@@ -58,3 +58,13 @@ export const createBlogAPI = async (formData, token) => {
     throw error;
   }
 };
+
+export const getBlogsDataAPI = async () => {
+  try {
+    const response = await api.get("/getallblogs");
+    return response;
+  } catch (error) {
+    console.log("Error while getting blogs data", error);
+    throw error;
+  }
+};

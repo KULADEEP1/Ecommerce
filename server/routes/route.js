@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user.js");
 const { signupUser, loginUser } = require("../controller/user-controller.js");
-const { createBlog } = require("../controller/blog-controller.js");
+const { createBlog,getAllBlogs } = require("../controller/blog-controller.js");
 const {validateToken} = require("../middleware.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -16,6 +16,8 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 
 router.post("/create",validateToken, upload.single("featuredImage"), createBlog);
+
+router.get("/getallblogs",getAllBlogs);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
@@ -44,7 +46,7 @@ router.post("/refresh-token", validateToken, async (req, res) => {
       email: user.email,
     },
   };
-  const accessToken = jwt.sign(payload, "jwtSecretkey", { expiresIn: "360s" });
+  const accessToken = jwt.sign(payload, "jwtSecretkey", { expiresIn: "7d" });
   return res.status(201).json({ accessToken, user });
 });
 module.exports = router;

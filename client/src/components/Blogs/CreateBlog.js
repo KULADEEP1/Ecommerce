@@ -76,11 +76,12 @@ const CreateBlog = () => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      localStorage.removeItem("token");
+    const token = localStorage.getItem("token");
+    if (!token) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

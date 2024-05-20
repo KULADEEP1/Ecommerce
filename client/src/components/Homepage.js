@@ -367,6 +367,15 @@ function HomePage() {
     }
   };
 
+  const handleExploreButton = () => {
+    if (!isAuthenticated) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    } else {
+      navigate("/viewall");
+    }
+  };
+
   return (
     <>
       <CssBaseline />
@@ -384,6 +393,7 @@ function HomePage() {
               <Button
                 variant="contained"
                 className={classes.exploreButton}
+                onClick={handleExploreButton}
                 startIcon={<ExploreIcon />}
               >
                 Explore Now
