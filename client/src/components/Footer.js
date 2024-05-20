@@ -60,7 +60,7 @@ function Footer() {
         <Typography variant="h6" className={classes.title}>
           Global Blog
         </Typography>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Link href="#" className={classes.link}>
             Home
           </Link>

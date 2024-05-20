@@ -1,30 +1,23 @@
 const Blog = require("../models/blog");
-const fs = require("fs");
 
 const createBlog = async (req, res) => {
-  try {
-    const { title, content, category, author, publishDate } = req.body;
-    const featuredImage = {
-      data: fs.readFileSync(req.file.path), // Read image data from file
-      contentType: req.file.mimetype, // Get content type of the image
-    };
+  const { title, content, category } = req.body;
 
+  try {
     const newBlog = new Blog({
       title,
       content,
       category,
-      author,
-      featuredImage,
-      publishDate,
+      author: req.user.username,
+      filename: req.file.originalname,
+      contentType: req.file.mimetype,
+      imageBase64: req.file.buffer.toString("base64"),
     });
 
     await newBlog.save();
-    return res.status(201).json({ msg: "Blog added successfully" });
+    res.status(201).json({ message: "Blog post created successfully" });
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ error: "Blog not added due to server error" });
+    res.status(500).json({ error: "Error while creating the blog post" });
   }
 };
 

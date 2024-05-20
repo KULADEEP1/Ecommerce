@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Home, Info, ContactMail } from "@material-ui/icons";
@@ -66,17 +66,28 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-  
 }));
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useUser();
+  const {
+    isAuthenticated,
+    setAuthenticated,
+  } = useUser();
   const navigate = useNavigate();
   const classes = useStyles();
 
+  const [redirect, setRedirect] = useState(false);
+
+  useEffect(() => {
+    if (redirect) {
+      navigate("/login");
+    }
+  }, [redirect, navigate]);
+
   const handleLogout = () => {
-    logout();
-    navigate("/");
+    localStorage.removeItem("token");
+    setAuthenticated(false);
+    setRedirect(true);
   };
 
   return (
@@ -88,7 +99,6 @@ const Navbar = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <NavLink
             to="/"
-            exact
             className={({ isActive }) =>
               `${classes.link} ${isActive ? classes.activeLink : ""}`
             }

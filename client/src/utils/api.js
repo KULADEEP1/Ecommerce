@@ -21,17 +21,40 @@ export const loginAPI = (data) => {
 };
 
 export const validateTokenAPI = (data) => {
-  return api.post("/validate-token",{}, {
-    headers: {
-      Authorization: `${data}`,
-    },
-  });
+  return api.post(
+    "/validate-token",
+    {},
+    {
+      headers: {
+        Authorization: `${data}`,
+      },
+    }
+  );
 };
 
 export const refreshTokenAPI = (data) => {
-  return api.post("/refresh-token",{}, {
-    headers: {
-      Authorization: `${data}`,
-    },
-  });
+  return api.post(
+    "/refresh-token",
+    {},
+    {
+      headers: {
+        Authorization: `${data}`,
+      },
+    }
+  );
+};
+
+export const createBlogAPI = async (formData, token) => {
+  try {
+    const response = await api.post("/create", formData, {
+      headers: {
+        "Content-type": "multipart/form-data",
+        Authorization: `${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Error while creating ", error);
+    throw error;
+  }
 };

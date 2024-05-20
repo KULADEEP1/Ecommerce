@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -9,6 +9,10 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { createBlogAPI } from "../../utils/api"; // Ensure this import is correct
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,24 +61,46 @@ const CreateBlog = () => {
     title: "",
     content: "",
     category: "",
-    author: "",
-    publishDate: "",
     featuredImage: null,
   });
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     const newValue = name === "featuredImage" ? files[0] : value;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: newValue,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (!isAuthenticated) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic
-    console.log(formData);
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await createBlogAPI(data,token);
+      if (response.status === 201) {
+        toast.success("Created successfully");
+        navigate("/");
+      } else {
+        toast.error("Error while creating.");
+      }
+    } catch (error) {
+      toast.error("Error while creating.");
+    }
   };
 
   return (
@@ -105,7 +131,7 @@ const CreateBlog = () => {
             name="content"
             variant="outlined"
             multiline
-            rows={10}
+            minRows={10}
             className={classes.field}
             value={formData.content}
             onChange={handleChange}
@@ -134,18 +160,6 @@ const CreateBlog = () => {
             <MenuItem value="Business">Business</MenuItem>
           </TextField>
           <Typography variant="subtitle1" className={classes.label}>
-            Author
-          </Typography>
-          <TextField
-            label="Author"
-            name="author"
-            variant="outlined"
-            className={classes.field}
-            value={formData.author}
-            onChange={handleChange}
-            required
-          />
-          <Typography variant="subtitle1" className={classes.label}>
             Featured Image
           </Typography>
           <input
@@ -153,22 +167,6 @@ const CreateBlog = () => {
             accept="image/*"
             name="featuredImage"
             className={classes.field}
-            onChange={handleChange}
-            required
-          />
-          <Typography variant="subtitle1" className={classes.label}>
-            Publish Date
-          </Typography>
-          <TextField
-            label="Publish Date"
-            name="publishDate"
-            type="date"
-            variant="outlined"
-            className={classes.field}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={formData.publishDate}
             onChange={handleChange}
             required
           />

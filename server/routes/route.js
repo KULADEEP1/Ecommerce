@@ -2,15 +2,20 @@ const express = require("express");
 const User = require("../models/user.js");
 const { signupUser, loginUser } = require("../controller/user-controller.js");
 const { createBlog } = require("../controller/blog-controller.js");
-const validateToken = require("../middleware.js");
+const {validateToken} = require("../middleware.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const multer = require("multer");
+
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.post("/signup", signupUser);
 
 router.post("/login", loginUser);
 
-router.post("/create", createBlog);
+router.post("/create",validateToken, upload.single("featuredImage"), createBlog);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
@@ -25,7 +30,7 @@ router.post("/validate-token", validateToken, async (req, res) => {
     const timeLeft = expiryTime - currentTime; // Calculate remaining time
     res.status(201).json({ isValid: true, user, timeLeft });
   } catch (error) {
-    console.error("Token not validated server error:", error);
+    // console.error("Token not validated server error:", error);
     res.status(500).json({ message: "Server error", isValid: false });
   }
 });

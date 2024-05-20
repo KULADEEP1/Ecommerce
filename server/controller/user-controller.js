@@ -23,7 +23,7 @@ const signupUser = async (req, res) => {
 
     return res.status(201).json({ msg: "Signup Successful" });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).json({ msg: "Error while signing up user" });
   }
 };
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
     };
     jwt.sign(payload, "jwtSecretkey", { expiresIn: "360s" }, (err, token) => {
       if (err) {
-        console.error(err);
+        // console.error(err);
         return res.status(500).json({ msg: "Error while logging in user" });
       }
       return res.status(201).json({ token,user });

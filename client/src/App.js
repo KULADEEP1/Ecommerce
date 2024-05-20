@@ -2,13 +2,7 @@ import React, { useEffect } from "react";
 import Layout from "./components/Layout";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Homepage from "./components/Homepage";
@@ -18,12 +12,9 @@ import About from "./components/About";
 import CreateBlog from "./components/Blogs/CreateBlog";
 import { validateTokenAPI, refreshTokenAPI } from "./utils/api";
 
-const PrivateRoute = ({ isAuthenticated }) => {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-};
-
 const App = () => {
-  const { login, logout, isAuthenticated } = useUser();
+  const { setAuthenticated } = useUser();
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -32,17 +23,19 @@ const App = () => {
         .then((response) => {
           const data = response.data;
           if (data.isValid) {
-            login(data.user, token);
             if (data.timeLeft < 300) {
               refreshAccessToken();
             }
+            setAuthenticated(true);
           } else {
-            logout();
+            setAuthenticated(false);
+            localStorage.removeItem("token");
           }
         })
         .catch((error) => {
-          console.error("Error validating token:", error);
-          logout();
+          // console.error("Error validating token:", error);
+          setAuthenticated(false);
+          localStorage.removeItem("token");
         });
     }
   });
@@ -82,9 +75,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route element={<PrivateRoute isAuthenticated={isAuthenticated} login={login} />}>
-              <Route path="/create" element={<CreateBlog />} />
-            </Route>
+            <Route path="/create" element={<CreateBlog />} />
           </Routes>
         </Layout>
       </Router>

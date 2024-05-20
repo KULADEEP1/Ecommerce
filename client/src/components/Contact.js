@@ -119,7 +119,7 @@ function Contact() {
                     variant="outlined"
                     fullWidth
                     multiline
-                    rows={4}
+                    minRows={4}
                     className={classes.formField}
                   />
                   <Button
