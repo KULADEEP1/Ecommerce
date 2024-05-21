@@ -8,7 +8,8 @@ import {
   CircularProgress,
   IconButton,
 } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons"; // Import the like icon
+import { Favorite } from "@material-ui/icons";
+import CommentForm from "./comments/CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,15 +47,18 @@ const ViewBlog = () => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentUser,setCurrentUser]=useState("");
   const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await getBlogDataAPI(id);
+        const token = localStorage.getItem("token");
+        const response = await getBlogDataAPI(id, token);
         if (response.status === 201) {
-          setBlog(response.data);
+          setBlog(response.data.blog);
+          setCurrentUser(response.data.username);
         } else {
           setError("Failed to fetch blog data");
         }
@@ -114,6 +118,7 @@ const ViewBlog = () => {
       <Typography variant="body1" paragraph>
         {blog.content}
       </Typography>
+      <CommentForm blogId={id} currentUser={currentUser} />
     </div>
   );
 };

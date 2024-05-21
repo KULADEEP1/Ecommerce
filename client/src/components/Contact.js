@@ -9,7 +9,6 @@ import {
   CssBaseline,
   Paper,
 } from "@material-ui/core";
-import Footer from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -161,7 +160,6 @@ function Contact() {
           </Grid>
         </Container>
       </div>
-      <Footer />
     </>
   );
 }

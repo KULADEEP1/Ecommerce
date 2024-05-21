@@ -10,7 +10,6 @@ import {
   Fade,
   CssBaseline,
 } from "@material-ui/core";
-import Footer from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -159,7 +158,6 @@ function About() {
           </Grid>
         </Container>
       </div>
-      <Footer />
     </>
   );
 }

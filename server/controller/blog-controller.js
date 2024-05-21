@@ -12,6 +12,7 @@ const createBlog = async (req, res) => {
       filename: req.file.originalname,
       contentType: req.file.mimetype,
       imageBase64: req.file.buffer.toString("base64"),
+      publishDate: new Date(),
     });
 
     await newBlog.save();
@@ -33,11 +34,12 @@ const getAllBlogs = async (req, res) => {
 const getBlogData = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    console.log(blog);
+    // console.log(blog);
     if (!blog) {
       return res.status(404).json({ error: "Blog post not found" });
     }
-    res.status(201).json(blog);
+    const username = req.user.username;
+    res.status(201).json({ blog, username });
   } catch (error) {
     res.status(500).json({ error: "Error while fetching blog post" });
   }

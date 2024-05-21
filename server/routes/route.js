@@ -27,7 +27,7 @@ router.post(
 
 router.get("/getallblogs", getAllBlogs);
 
-router.get("/viewblog/:id", getBlogData);
+router.get("/viewblog/:id",validateToken, getBlogData);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
