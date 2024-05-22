@@ -6,7 +6,7 @@ const {
   getAllBlogs,
   getBlogData,
 } = require("../controller/blog-controller.js");
-const { newComment } =require("../controller/comment-controller.js");
+const { newComment ,getAllComments} =require("../controller/comment-controller.js");
 const { validateToken } = require("../middleware.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -31,6 +31,8 @@ router.get("/getallblogs", getAllBlogs);
 router.get("/viewblog/:id",validateToken, getBlogData);
 
 router.post("/newcomment/:id",newComment);
+
+router.get("/getallcomments/:id",getAllComments);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {

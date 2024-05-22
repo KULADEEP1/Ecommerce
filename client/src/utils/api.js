@@ -86,10 +86,20 @@ export const getBlogDataAPI = async (id, token) => {
 
 export const newCommentAPI = async (currentUser, text, id) => {
   try {
-    const response = await api.post(`/newcomment/${id}`, {currentUser, text});
+    const response = await api.post(`/newcomment/${id}`, { currentUser, text });
     return response;
   } catch (error) {
     console.log("Error adding new comment", error);
+    throw error;
+  }
+};
+
+export const getAllCommentsAPI = async (id) => {
+  try {
+    const response = await api.get(`/getallcomments/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };
