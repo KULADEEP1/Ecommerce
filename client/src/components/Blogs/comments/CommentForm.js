@@ -7,7 +7,10 @@ import {
   createTheme,
   ThemeProvider,
 } from "@material-ui/core";
-import { Person } from "@material-ui/icons"; // Import the Person icon
+import { Person } from "@material-ui/icons"; 
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { newCommentAPI } from "../../../utils/api";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -76,9 +79,21 @@ const CommentForm = ({ blogId, currentUser }) => {
   const classes = useStyles();
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
+  const { id } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(currentUser,text,id);
+    try {
+      const response = await newCommentAPI(currentUser, text, id);
+      if (response.status === 201) {
+        toast.success("Comment Added Successfully !");
+      } else {
+        toast.error("Comment not added");
+      }
+    } catch (error) {
+      toast.error("Comment not added server error");
+    }
   };
 
   return (

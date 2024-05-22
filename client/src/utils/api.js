@@ -72,17 +72,24 @@ export const getBlogsDataAPI = async () => {
 
 export const getBlogDataAPI = async (id, token) => {
   try {
-    const response = await api.get(
-      `/viewblog/${id}`,
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
+    const response = await api.get(`/viewblog/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     return response;
   } catch (error) {
     console.log("Error while fetching blog data", error);
+    throw error;
+  }
+};
+
+export const newCommentAPI = async (currentUser, text, id) => {
+  try {
+    const response = await api.post(`/newcomment/${id}`, {currentUser, text});
+    return response;
+  } catch (error) {
+    console.log("Error adding new comment", error);
     throw error;
   }
 };
