@@ -7,7 +7,7 @@ import {
   createTheme,
   ThemeProvider,
 } from "@material-ui/core";
-import { Person } from "@material-ui/icons"; 
+import { Person } from "@material-ui/icons";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { newCommentAPI } from "../../../utils/api";
@@ -35,16 +35,16 @@ const useStyles = makeStyles((theme) => ({
   },
   profileIcon: {
     marginRight: theme.spacing(1),
-    color: theme.palette.text.secondary, // Customize the color if needed
+    color: theme.palette.text.secondary,
   },
   textField: {
     marginBottom: theme.spacing(2),
     "& .MuiInputBase-root": {
-      fontSize: "0.875rem", // Reduce font size
-      padding: theme.spacing(1), // Reduce padding
+      fontSize: "0.875rem", 
+      padding: theme.spacing(1),
     },
     "& .MuiOutlinedInput-inputMultiline": {
-      padding: theme.spacing(1), // Reduce padding for multiline input
+      padding: theme.spacing(1),
     },
   },
   submitButton: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: theme.palette.primary.dark,
     },
-    padding: theme.spacing(1, 3), // Adjusted padding for a more compact button
+    padding: theme.spacing(1, 3),
   },
 }));
 
@@ -75,7 +75,7 @@ const theme = createTheme({
   },
 });
 
-const CommentForm = ({ blogId, currentUser }) => {
+const CommentForm = ({ blogId, currentUser, onCommentAdded }) => {
   const classes = useStyles();
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
@@ -83,11 +83,12 @@ const CommentForm = ({ blogId, currentUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(currentUser,text,id);
     try {
       const response = await newCommentAPI(currentUser, text, id);
       if (response.status === 201) {
         toast.success("Comment Added Successfully !");
+        setText(""); 
+        onCommentAdded();
       } else {
         toast.error("Comment not added");
       }

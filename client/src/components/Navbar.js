@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Home, Info, ContactMail } from "@material-ui/icons";
@@ -73,19 +73,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const classes = useStyles();
 
-  const [redirect, setRedirect] = useState(false);
-
-  // useEffect(() => {
-  //   if (redirect) {
-  //     navigate("/login");
-  //   }
-  // }, [redirect, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setAuthenticated(false);
     navigate("/login");
-    // setRedirect(true);
   };
 
   return (

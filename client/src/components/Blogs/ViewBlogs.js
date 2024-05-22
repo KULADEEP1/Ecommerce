@@ -3,14 +3,7 @@ import { toast } from "react-toastify";
 import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { getBlogsDataAPI } from "../../utils/api";
-import {
-  Container,
-  Grid,
-  CssBaseline,
-  Button,
-  Box,
-  CircularProgress,
-} from "@material-ui/core";
+import {Container,Grid,CssBaseline,Button,Box,CircularProgress,} from "@material-ui/core";
 import BlogCard from "./BlogCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
@@ -35,7 +28,7 @@ const ViewBlogs = () => {
   const [blogsData, setBlogsData] = useState([]);
   const [visibleBlogs, setVisibleBlogs] = useState(3);
   const [loading, setLoading] = useState(false);
-  const [buttonLoading, setButtonLoading] = useState(false); // State for button loading
+  const [buttonLoading, setButtonLoading] = useState(false); 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,11 +58,11 @@ const ViewBlogs = () => {
   }, []);
 
   const handleLoadMore = async () => {
-    setButtonLoading(true); // Set button loading state to true
+    setButtonLoading(true);
     setTimeout(() => {
       setVisibleBlogs((prevVisibleBlogs) => prevVisibleBlogs + 3);
-      setButtonLoading(false); // Set button loading state to false after timeout
-    }, 1000); // Simulating network delay
+      setButtonLoading(false); 
+    }, 1000); 
   };
 
   return (
@@ -96,7 +89,7 @@ const ViewBlogs = () => {
               color="primary"
               onClick={handleLoadMore}
               startIcon={<ExpandMoreIcon />}
-              disabled={buttonLoading} // Disable button when button is loading
+              disabled={buttonLoading} 
             >
               {buttonLoading ? <CircularProgress size={24} /> : "Load More"}
             </Button>

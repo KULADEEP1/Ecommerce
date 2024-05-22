@@ -1,4 +1,3 @@
-// src/components/comments/Comment.js
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, Typography, Paper, Grid, Box } from "@material-ui/core";
@@ -49,7 +48,7 @@ const Comment = ({ author, text, date }) => {
     <Paper className={classes.commentContainer}>
       <Grid container wrap="nowrap" spacing={1}>
         <Grid item>
-          <Avatar className={classes.avatar}>{author.charAt(0)}</Avatar>
+          <Avatar className={classes.avatar}>p</Avatar>
         </Grid>
         <Grid item xs>
           <Box className={classes.authorDateContainer}>

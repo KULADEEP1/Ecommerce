@@ -79,26 +79,26 @@ const ViewBlog = () => {
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await getAllCommentsAPI(id);
-        if (response.status === 201) {
-          setAllComments(response.data);
-        } else {
-          toast.error("Error while loading comments");
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Error while loading comments from server side");
+  const fetchComments = async () => {
+    try {
+      const response = await getAllCommentsAPI(id);
+      if (response.status === 201) {
+        setAllComments(response.data);
+      } else {
+        toast.error("Error while loading comments");
       }
-    };
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while loading comments from server side");
+    }
+  };
+  useEffect(() => {
     fetchComments();
   }, [id]);
 
-  useEffect(() => {
-    console.log(allComments);
-  }, [allComments]);
+  const handleCommentAdded = () => {
+    fetchComments();
+  };
 
   if (loading) {
     return (
@@ -149,7 +149,11 @@ const ViewBlog = () => {
           {blog.content}
         </Typography>
       </Box>
-      <CommentForm blogId={id} currentUser={currentUser} />
+      <CommentForm
+        blogId={id}
+        currentUser={currentUser}
+        onCommentAdded={handleCommentAdded}
+      />
       <div className={classes.commentsSection}>
         <Typography variant="h6">Comments</Typography>
         {allComments.length > 0 ? (
