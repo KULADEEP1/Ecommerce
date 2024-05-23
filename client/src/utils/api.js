@@ -103,3 +103,13 @@ export const getAllCommentsAPI = async (id) => {
     throw error;
   }
 };
+
+export const deleteCommentAPI = async (id) => {
+  try {
+    const response = await api.delete(`/deletecomment/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

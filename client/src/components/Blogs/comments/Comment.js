@@ -1,9 +1,18 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar, Typography, Paper, Grid, Box } from "@material-ui/core";
+import {
+  Avatar,
+  Typography,
+  Paper,
+  Grid,
+  Box,
+  IconButton,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
+    position: "relative",
     padding: theme.spacing(2),
     backgroundColor: "#fff",
     border: "1px solid #e0e0e0",
@@ -40,12 +49,20 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.8rem",
     color: theme.palette.text.secondary,
   },
+  deleteButton: {
+    position: "absolute",
+    top: theme.spacing(3.5),
+    right: theme.spacing(1),
+  },
 }));
 
-const Comment = ({ author, text, date }) => {
+const Comment = ({ author, text, date, onDelete }) => {
   const classes = useStyles();
   return (
     <Paper className={classes.commentContainer}>
+      <IconButton onClick={onDelete} className={classes.deleteButton}>
+        <DeleteIcon />
+      </IconButton>
       <Grid container wrap="nowrap" spacing={1}>
         <Grid item>
           <Avatar className={classes.avatar}>p</Avatar>

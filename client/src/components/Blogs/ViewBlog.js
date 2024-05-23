@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getBlogDataAPI, getAllCommentsAPI } from "../../utils/api";
+import {
+  getBlogDataAPI,
+  getAllCommentsAPI,
+  deleteCommentAPI,
+} from "../../utils/api";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -9,6 +13,7 @@ import {
   IconButton,
   Container,
   Box,
+  Button,
 } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
 import CommentForm from "./comments/CommentForm";
@@ -47,15 +52,25 @@ const useStyles = makeStyles((theme) => ({
   commentsSection: {
     marginTop: theme.spacing(4),
   },
+  loadMoreContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(2),
+  },
 }));
+
+const COMMENTS_BATCH_SIZE = 3;
 
 const ViewBlog = () => {
   const classes = useStyles();
   const [blog, setBlog] = useState({});
   const [allComments, setAllComments] = useState([]);
+  const [displayedComments, setDisplayedComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState("");
+  const [visibleCount, setVisibleCount] = useState(COMMENTS_BATCH_SIZE);
+  const [loadingMore, setLoadingMore] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -84,6 +99,7 @@ const ViewBlog = () => {
       const response = await getAllCommentsAPI(id);
       if (response.status === 201) {
         setAllComments(response.data);
+        setDisplayedComments(response.data.slice(0, COMMENTS_BATCH_SIZE));
       } else {
         toast.error("Error while loading comments");
       }
@@ -92,11 +108,25 @@ const ViewBlog = () => {
       toast.error("Error while loading comments from server side");
     }
   };
+
   useEffect(() => {
     fetchComments();
   }, [id]);
 
+  const handleLoadMore = () => {
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleCount((prevCount) => {
+        const newCount = prevCount + COMMENTS_BATCH_SIZE;
+        setDisplayedComments(allComments.slice(0, newCount));
+        setLoadingMore(false);
+        return newCount;
+      });
+    }, 500);
+  };
+
   const handleCommentAdded = () => {
+    setVisibleCount(COMMENTS_BATCH_SIZE);
     fetchComments();
   };
 
@@ -117,6 +147,21 @@ const ViewBlog = () => {
       </div>
     );
   }
+
+  const handleDeleteComment = async (id) => {
+    try {
+      const response = await deleteCommentAPI(id);
+      if (response.status === 201) {
+        toast.success("Comment Deleted Successfully..");
+        fetchComments();
+      } else {
+        toast.error("Errow while Deleting comment..");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while Deleting comment Server side..");
+    }
+  };
 
   return (
     <Container className={classes.root}>
@@ -156,19 +201,33 @@ const ViewBlog = () => {
       />
       <div className={classes.commentsSection}>
         <Typography variant="h6">Comments</Typography>
-        {allComments.length > 0 ? (
-          allComments.map((comment) => (
+        {displayedComments.length > 0 ? (
+          displayedComments.map((comment) => (
             <Comment
               key={comment._id}
               author={comment.author}
               text={comment.text}
               date={comment.date}
+              onDelete={() => handleDeleteComment(comment._id)}
             />
           ))
         ) : (
           <Typography variant="body2" color="textSecondary">
             No comments available.
           </Typography>
+        )}
+        {visibleCount < allComments.length && (
+          <div className={classes.loadMoreContainer}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleLoadMore}
+              className={classes.loadMoreButton}
+              disabled={loadingMore}
+            >
+              {loadingMore ? <CircularProgress size={24} /> : "Load More"}
+            </Button>
+          </div>
         )}
       </div>
     </Container>
