@@ -104,9 +104,37 @@ export const getAllCommentsAPI = async (id) => {
   }
 };
 
-export const deleteCommentAPI = async (id) => {
+export const deleteCommentAPI = async (id, token) => {
   try {
     const response = await api.delete(`/deletecomment/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addLikeAPI = async (id, token) => {
+  try {
+    const response = await api.post(`/newlike/${id}`,{}, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteLikeAPI = async (id, token) => {
+  try {
+    const response = await api.delete(`/removelike/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);

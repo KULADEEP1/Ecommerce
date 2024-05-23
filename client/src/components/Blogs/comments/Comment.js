@@ -65,7 +65,7 @@ const Comment = ({ author, text, date, onDelete }) => {
       </IconButton>
       <Grid container wrap="nowrap" spacing={1}>
         <Grid item>
-          <Avatar className={classes.avatar}>p</Avatar>
+          <Avatar className={classes.avatar}/>
         </Grid>
         <Grid item xs>
           <Box className={classes.authorDateContainer}>

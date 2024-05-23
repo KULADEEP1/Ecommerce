@@ -1,4 +1,5 @@
 const Blog = require("../models/blog");
+const Like = require("../models/like.js");
 
 const createBlog = async (req, res) => {
   const { title, content, category } = req.body;
@@ -38,8 +39,13 @@ const getBlogData = async (req, res) => {
     if (!blog) {
       return res.status(404).json({ error: "Blog post not found" });
     }
+    const isLiked = await Like.exists({
+          blogId: req.params.id,
+          userId: req.user.id,
+        });
+
     const username = req.user.username;
-    res.status(201).json({ blog, username });
+    res.status(201).json({ blog, username,isLiked });
   } catch (error) {
     res.status(500).json({ error: "Error while fetching blog post" });
   }

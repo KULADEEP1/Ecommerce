@@ -6,7 +6,6 @@ import { getBlogsDataAPI } from "../../utils/api";
 import {Container,Grid,CssBaseline,Button,Box,CircularProgress,} from "@material-ui/core";
 import BlogCard from "./BlogCard";
 import { makeStyles } from "@material-ui/core/styles";
-import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   loadMoreButton: {
@@ -88,7 +87,6 @@ const ViewBlogs = () => {
               variant="contained"
               color="primary"
               onClick={handleLoadMore}
-              startIcon={<ExpandMoreIcon />}
               disabled={buttonLoading} 
             >
               {buttonLoading ? <CircularProgress size={24} /> : "Load More"}

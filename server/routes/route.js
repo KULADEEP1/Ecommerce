@@ -11,6 +11,7 @@ const {
   getAllComments,
   deleteComment,
 } = require("../controller/comment-controller.js");
+const { addLike, removeLike } = require("../controller/like-controller.js");
 const { validateToken } = require("../middleware.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -32,13 +33,17 @@ router.post(
 
 router.get("/getallblogs", getAllBlogs);
 
-router.get("/viewblog/:id",validateToken, getBlogData);
+router.get("/viewblog/:id", validateToken, getBlogData);
 
-router.post("/newcomment/:id",newComment);
+router.post("/newcomment/:id", newComment);
 
-router.get("/getallcomments/:id",getAllComments);
+router.get("/getallcomments/:id", getAllComments);
 
-router.delete("/deletecomment/:id",deleteComment);
+router.delete("/deletecomment/:id", deleteComment);
+
+router.post("/newlike/:id", validateToken, addLike);
+
+router.delete("/removelike/:id", validateToken, removeLike);
 
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
@@ -46,11 +51,10 @@ router.post("/validate-token", validateToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const decodedToken = jwt.decode(req.token); // Decode the token
-
-    const expiryTime = decodedToken.exp; // Extract expiration time
-    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-    const timeLeft = expiryTime - currentTime; // Calculate remaining time
+    const decodedToken = jwt.decode(req.token);
+    const expiryTime = decodedToken.exp;
+    const currentTime = Math.floor(Date.now() / 1000);
+    const timeLeft = expiryTime - currentTime;
     res.status(201).json({ isValid: true, user, timeLeft });
   } catch (error) {
     // console.error("Token not validated server error:", error);

@@ -11,7 +11,6 @@ const validateToken = function (req, res, next) {
     req.token = token;
     next();
   } catch (error) {
-    // console.log(error);
     return res.status(500).send("Invalid token");
   }
 };
