@@ -15,8 +15,11 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: "#333",
+    marginTop: "auto", // Change to auto
     color: "#fff",
-    padding: theme.spacing(6, 0),
+    padding: theme.spacing(4, 0),
+    bottom: 0,
+    width: "100%",
   },
   container: {
     display: "flex",
