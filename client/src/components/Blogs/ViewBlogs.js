@@ -25,7 +25,7 @@ const ViewBlogs = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useUser();
   const [blogsData, setBlogsData] = useState([]);
-  const [visibleBlogs, setVisibleBlogs] = useState(3);
+  const [visibleBlogs, setVisibleBlogs] = useState(6);
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false); 
 

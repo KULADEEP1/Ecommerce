@@ -17,57 +17,52 @@ import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  // "@global": {
-  //   body: {
-  //     margin: 0,
-  //     padding: 0,
-  //     boxSizing: "border-box",
-  //     overflowX: "hidden",
-  //   },
-  //   html: {
-  //     margin: 0,
-  //     padding: 0,
-  //     boxSizing: "border-box",
-  //     overflowX: "hidden",
-  //   },
-  // },
   root: {
     textAlign: "center",
     backgroundColor: "#f0f0f0",
     color: "#333",
     minHeight: "100vh",
-    width: "100vw",
+    width: "100%",
     overflowX: "hidden",
   },
   header: {
-    padding: theme.spacing(8, 0),
+    padding: theme.spacing(8, 2),
     background: "linear-gradient(to bottom, #662d8c, #ed1e79)",
     color: "#fff",
-    margin: 0,
   },
   headerContent: {
     maxWidth: 600,
     margin: "0 auto",
+    [theme.breakpoints.down("xs")]: {
+      padding: theme.spacing(2),
+    },
   },
   headerTitle: {
     fontSize: "3rem",
     marginBottom: "1rem",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "2rem",
+    },
   },
   headerText: {
     fontSize: "1.5rem",
     marginBottom: "2rem",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
+    },
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
     gap: "1rem",
+    flexWrap: "wrap",
   },
   exploreButton: {
     background: "linear-gradient(to bottom, #ff512f, #dd2476)",
     color: "#fff",
     border: "none",
-    padding: "1rem 1rem",
-    fontSize: "1.5rem",
+    padding: theme.spacing(1, 2),
+    fontSize: "1.2rem",
     cursor: "pointer",
     transition: "background-color 0.3s, color 0.3s",
     textDecoration: "none",
@@ -75,10 +70,18 @@ const useStyles = makeStyles((theme) => ({
       background: "linear-gradient(to bottom, #ff512f, #f09819)",
       color: "#fff",
     },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
+      padding: theme.spacing(1, 1.5),
+    },
   },
   mainContent: {
-    padding: theme.spacing(8, 0),
-    margin: 50,
+    padding: theme.spacing(8, 2),
+    margin: theme.spacing(0, 2),
+    [theme.breakpoints.down("xs")]: {
+      padding: theme.spacing(4, 2),
+      margin: theme.spacing(0, 1),
+    },
   },
   card: {
     backgroundColor: "#fff",
@@ -102,11 +105,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.8rem",
     marginBottom: theme.spacing(1),
     color: "#222",
+    height: 70,
     fontWeight: 600,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.5rem",
+    },
   },
   cardText: {
     fontSize: "1.1rem",
     color: "#555",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
+    },
   },
 }));
 
@@ -165,7 +175,7 @@ function HomePage() {
           </Container>
         </div>
         <Container className={classes.mainContent}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justifyContent="center">
             <Grid item xs={12} sm={6} md={4}>
               <Grow in>
                 <Card className={classes.card}>
@@ -216,9 +226,9 @@ function HomePage() {
                 </Card>
               </Grow>
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <Grow in>
-                <Card className={classes.card}>
+                <Card style={{ marginRight: "25px" }} className={classes.card}>
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
