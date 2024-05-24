@@ -109,14 +109,13 @@ const Signup = () => {
 
       if (response.status === 201) {
         toast.success("Signup successful");
-        // console.log(response);
         navigate("/login");
       } else {
         toast.error("Signup failed");
         navigate("/signup");
       }
     } catch (error) {
-      // console.error("There was an error signing up!", error);
+      console.error("There was an error signing up!", error);
       toast.error("There was an error signing up!");
     }
   };

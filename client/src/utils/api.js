@@ -55,7 +55,7 @@ export const createBlogAPI = async (formData, token) => {
     });
     return response;
   } catch (error) {
-    console.log("Error while creating ", error);
+    // console.log("Error while creating ", error);
     throw error;
   }
 };
@@ -65,7 +65,7 @@ export const getBlogsDataAPI = async () => {
     const response = await api.get("/getallblogs");
     return response;
   } catch (error) {
-    console.log("Error while getting blogs data", error);
+    // console.log("Error while getting blogs data", error);
     throw error;
   }
 };
@@ -79,7 +79,7 @@ export const getBlogDataAPI = async (id, token) => {
     });
     return response;
   } catch (error) {
-    console.log("Error while fetching blog data", error);
+    // console.log("Error while fetching blog data", error);
     throw error;
   }
 };
@@ -89,7 +89,7 @@ export const newCommentAPI = async (currentUser, text, id) => {
     const response = await api.post(`/newcomment/${id}`, { currentUser, text });
     return response;
   } catch (error) {
-    console.log("Error adding new comment", error);
+    // console.log("Error adding new comment", error);
     throw error;
   }
 };
@@ -99,7 +99,7 @@ export const getAllCommentsAPI = async (id) => {
     const response = await api.get(`/getallcomments/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 };
@@ -109,7 +109,7 @@ export const deleteCommentAPI = async (id, token) => {
     const response = await api.delete(`/deletecomment/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 };
@@ -123,7 +123,7 @@ export const addLikeAPI = async (id, token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 };
@@ -137,7 +137,7 @@ export const deleteLikeAPI = async (id, token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 };

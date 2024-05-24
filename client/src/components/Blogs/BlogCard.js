@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#555",
     marginBottom: theme.spacing(2),
     flexGrow: 1,
-    minHeight: "100px", // Adjust this value as needed to set a fixed height
+    minHeight: "100px", 
   },
   cardFooter: {
     display: "flex",
@@ -87,7 +87,7 @@ function BlogCard({ blog }) {
         const token = localStorage.getItem("token");
         const response = await getBlogDataAPI(blog._id, token);
         if (response.status === 201) {
-          setIsLiked(response.data.isLiked); // Assuming the API returns if the blog is liked by the current user
+          setIsLiked(response.data.isLiked);
         } else {
           toast.error("Failed to fetch blog data");
         }

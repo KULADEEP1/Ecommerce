@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const signupUser = async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body;
-
+    console.log(username, email, password, confirmPassword);  
     let exist = await User.findOne({ email });
     if (exist) {
       return res.status(400).json({ msg: "User already exists" });
@@ -20,14 +20,12 @@ const signupUser = async (req, res) => {
       confirmPassword,
     });
     await newUser.save();
-
     return res.status(201).json({ msg: "Signup Successful" });
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return res.status(500).json({ msg: "Error while signing up user" });
   }
 };
-
 
 const loginUser = async (req, res) => {
   try {
@@ -37,10 +35,9 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ msg: "User does not exist" });
     }
-     if (user.password !== password) {
+    if (user.password !== password) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
-
 
     // Generate JWT token with user data
     const payload = {
@@ -55,7 +52,7 @@ const loginUser = async (req, res) => {
         // console.error(err);
         return res.status(500).json({ msg: "Error while logging in user" });
       }
-      return res.status(201).json({ token,user });
+      return res.status(201).json({ token, user });
     });
   } catch (error) {
     // console.error(error);

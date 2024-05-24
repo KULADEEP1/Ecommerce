@@ -136,7 +136,7 @@ const ViewBlogs = () => {
     <>
       <CssBaseline />
       <div className={classes.root}>
-        <Container style={{ marginTop: "40px" }}>
+        <Container maxWidth="xl" style={{ marginTop: "40px" }}>
           {loading ? (
             <div style={{ display: "flex", justifyContent: "center" }}>
               <CircularProgress />

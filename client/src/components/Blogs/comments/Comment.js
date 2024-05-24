@@ -56,16 +56,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Comment = ({ author, text, date, onDelete }) => {
+const Comment = ({ author, text, date,currentUser, onDelete }) => {
   const classes = useStyles();
   return (
     <Paper className={classes.commentContainer}>
-      <IconButton onClick={onDelete} className={classes.deleteButton}>
-        <DeleteIcon />
-      </IconButton>
+      {author === currentUser && (
+        <IconButton onClick={onDelete} className={classes.deleteButton}>
+          <DeleteIcon />
+        </IconButton>
+      )}
       <Grid container wrap="nowrap" spacing={1}>
         <Grid item>
-          <Avatar className={classes.avatar}/>
+          <Avatar className={classes.avatar} />
         </Grid>
         <Grid item xs>
           <Box className={classes.authorDateContainer}>

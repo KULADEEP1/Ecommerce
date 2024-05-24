@@ -1,118 +1,145 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
   Typography,
-  Grid,
+  Box,
   Link,
   IconButton,
 } from "@material-ui/core";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  LinkedIn,
+  Email,
+  Phone,
+  Home,
+} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    backgroundColor: "#333",
-    marginTop: "auto", // Change to auto
-    color: "#fff",
-    padding: theme.spacing(4, 0),
+    backgroundColor: theme.palette.grey[900],
+    color: theme.palette.grey[300],
+    padding: theme.spacing(0, 0),
+    borderTop: `4px solid ${theme.palette.secondary.main}`,
+    // position: "fixed",
     bottom: 0,
+    minWidth: "98.5vw",
     width: "100%",
+    marginBottom: "-15px",
+    marginLeft: "-8px",
+    // marginRight:"25px",
+    overflow: "hidden",
   },
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  title: {
-    marginBottom: theme.spacing(2),
-    fontSize: "1.5rem",
+  logo: {
     fontWeight: "bold",
+    marginBottom: theme.spacing(2),
+    color: theme.palette.primary.main,
   },
   link: {
-    color: "#fff",
+    color: theme.palette.secondary.light,
     textDecoration: "none",
-    margin: theme.spacing(0.5),
+    display: "block",
+    marginBottom: theme.spacing(1),
     "&:hover": {
       textDecoration: "underline",
+      color: theme.palette.secondary.main,
     },
   },
-  socialIcons: {
-    marginTop: theme.spacing(2),
-  },
-  iconButton: {
-    color: "#fff",
-    "&:hover": {
-      color: "#f09819",
+  socialMedia: {
+    display: "flex",
+    "& a": {
+      marginRight: theme.spacing(2),
+      color: theme.palette.grey[300],
+      "&:hover": {
+        color: theme.palette.secondary.main,
+      },
     },
   },
-  copyRight: {
-    marginTop: theme.spacing(3),
-    fontSize: "0.875rem",
+  contact: {
+    "& p": {
+      display: "flex",
+      alignItems: "center",
+      marginBottom: theme.spacing(1),
+      color: theme.palette.grey[300],
+      "& svg": {
+        marginRight: theme.spacing(1),
+      },
+    },
+  },
+  footerSection: {
+    marginBottom: theme.spacing(2),
+    flex: 1,
+    minWidth: 150, // ensures minimum width for columns
+  },
+  footerContent: {
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
   },
 }));
 
-function Footer() {
+const Footer = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.footer}>
-      <Container className={classes.container}>
-        <Typography variant="h6" className={classes.title}>
-          Global Blog
-        </Typography>
-        <Grid container justifyContent="center">
-          <Link href="#" className={classes.link}>
-            Home
-          </Link>
-          <Link href="#" className={classes.link}>
-            About
-          </Link>
-          <Link href="#" className={classes.link}>
-            Services
-          </Link>
-          <Link href="#" className={classes.link}>
-            Contact
-          </Link>
-        </Grid>
-        <div className={classes.socialIcons}>
-          <IconButton
-            href="https://www.facebook.com"
-            target="_blank"
-            className={classes.iconButton}
-          >
-            <FacebookIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.twitter.com"
-            target="_blank"
-            className={classes.iconButton}
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.instagram.com"
-            target="_blank"
-            className={classes.iconButton}
-          >
-            <InstagramIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.linkedin.com"
-            target="_blank"
-            className={classes.iconButton}
-          >
-            <LinkedInIcon />
-          </IconButton>
-        </div>
-        <Typography className={classes.copyRight}>
-          &copy; {new Date().getFullYear()} Global Blog. All rights reserved.
-        </Typography>
+    <footer className={classes.footer}>
+      <Container maxWidth="lg">
+        <Box className={classes.footerContent}>
+          <Box className={classes.footerSection}>
+            <Typography variant="h5" className={classes.logo}>
+              Global-Blog
+            </Typography>
+          </Box>
+          <Box className={classes.footerSection}>
+            <Typography variant="h6">Quick Links</Typography>
+            <Link href="/" className={classes.link}>
+              Home
+            </Link>
+            <Link href="/about" className={classes.link}>
+              About Us
+            </Link>
+            <Link href="/contact" className={classes.link}>
+              Contact
+            </Link>
+          </Box>
+          <Box className={classes.footerSection}>
+            <Typography variant="h6">Follow Us</Typography>
+            <div className={classes.socialMedia}>
+              <IconButton href="https://www.facebook.com" target="_blank">
+                <Facebook />
+              </IconButton>
+              <IconButton href="https://www.twitter.com" target="_blank">
+                <Twitter />
+              </IconButton>
+              <IconButton href="https://www.instagram.com" target="_blank">
+                <Instagram />
+              </IconButton>
+              <IconButton href="https://www.linkedin.com" target="_blank">
+                <LinkedIn />
+              </IconButton>
+            </div>
+          </Box>
+          <Box className={classes.footerSection}>
+            <Typography variant="h6">Contact Us</Typography>
+            <Typography variant="body2" component="p">
+              <Email /> basettykuladeep@gmail.com
+            </Typography>
+            <Typography variant="body2" component="p">
+              <Phone /> (+91) 85198 26136
+            </Typography>
+            <Typography variant="body2" component="p">
+              <Home /> PDPM IIITDM,jabalpur,India
+            </Typography>
+          </Box>
+        </Box>
       </Container>
-    </div>
+    </footer>
   );
-}
+};
 
 export default Footer;
