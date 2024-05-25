@@ -1,14 +1,27 @@
-import React from "react";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Box,
+  Tooltip,
+  Menu,
+  MenuItem,
+  Divider,
+  ListItemIcon,
+} from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Home, Info, ContactMail } from "@material-ui/icons";
+import { Home, Info, ContactMail } from "@mui/icons-material";
 import { useUser } from "../context/UserContext";
 import { makeStyles } from "@material-ui/core/styles";
+import Logout from "@mui/icons-material/Logout";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    backgroundColor: "#333",
-    height: "80px",
+    backgroundColor: "black",
+    height: "70px",
   },
   toolbar: {
     display: "flex",
@@ -23,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   activeLink: {
-    color: "#4CAF50",
-    borderBottom: "2px solid #4CAF50",
+    color: "#FFD700", // Gold color for active link
+    borderBottom: "2px solid #FFD700", // Gold border bottom color
   },
   buttonText: {
     marginLeft: theme.spacing(1),
@@ -73,6 +86,16 @@ const Navbar = () => {
   const navigate = useNavigate();
   const classes = useStyles();
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -115,14 +138,45 @@ const Navbar = () => {
             <Typography className={classes.buttonText}>Contact</Typography>
           </NavLink>
           {isAuthenticated ? (
-            <Typography
-              color="secondary"
-              onClick={handleLogout}
-              className={classes.logoutButton}
-              style={{ marginLeft: "10px", cursor: "pointer" }}
-            >
-              Logout
-            </Typography>
+            <>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Tooltip title="Account settings">
+                  <IconButton
+                    onClick={handleMenuOpen}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={open ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  >
+                    <Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleMenuClose}
+                onClick={handleMenuClose}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={() => navigate("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/account")}>
+                  My Blogs
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
           ) : (
             <>
               <NavLink to="/signup" className={classes.signupButton}>

@@ -228,7 +228,7 @@ function HomePage() {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Grow in>
-                <Card style={{ marginRight: "25px" }} className={classes.card}>
+                <Card style={{ marginRight: "20px" }} className={classes.card}>
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
@@ -246,6 +246,79 @@ function HomePage() {
                     >
                       Connect with a global community of like-minded
                       individuals.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grow>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Grow in>
+                <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    className={classes.cardImage}
+                    image="https://source.unsplash.com/400x300/?innovation,dark"
+                    alt="Innovative"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography variant="h2" className={classes.cardTitle}>
+                      Innovative Ideas
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={classes.cardText}
+                      gutterBottom
+                    >
+                      Discover innovative ideas and creative solutions.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grow>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Grow in>
+                <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    className={classes.cardImage}
+                    image="https://source.unsplash.com/400x300/?travel,dark"
+                    alt="Travel"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography variant="h2" className={classes.cardTitle}>
+                      Travel Adventures
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={classes.cardText}
+                      gutterBottom
+                    >
+                      Embark on travel adventures and explore new destinations.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grow>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Grow in>
+                <Card style={{ marginRight: "20px" }} className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    className={classes.cardImage}
+                    image="https://source.unsplash.com/400x300/?health,dark"
+                    alt="Health"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography variant="h2" className={classes.cardTitle}>
+                      Health & Wellness
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={classes.cardText}
+                      gutterBottom
+                    >
+                      Learn about health and wellness tips for a better
+                      lifestyle.
                     </Typography>
                   </CardContent>
                 </Card>
