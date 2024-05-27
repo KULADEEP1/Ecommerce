@@ -13,6 +13,8 @@ import CreateBlog from "./components/Blogs/CreateBlog";
 import { validateTokenAPI, refreshTokenAPI } from "./utils/api";
 import ViewBlogs from "./components/Blogs/ViewBlogs";
 import ViewBlog from "./components/Blogs/ViewBlog";
+import UserBlogs from "./components/Blogs/UserBlogs";
+
 const App = () => {
   const { setAuthenticated } = useUser();
 
@@ -30,12 +32,14 @@ const App = () => {
           } else {
             setAuthenticated(false);
             localStorage.removeItem("token");
+            localStorage.removeItem("username");
           }
         })
         .catch((error) => {
           // console.error("Error validating token:", error);
           setAuthenticated(false);
           localStorage.removeItem("token");
+          localStorage.removeItem("username");
         });
     }
   });
@@ -60,7 +64,7 @@ const App = () => {
           <ToastContainer
             theme="colored"
             position="top-right"
-            autoClose={5000}
+            autoClose={4000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -78,6 +82,7 @@ const App = () => {
             <Route path="/create" element={<CreateBlog />} />
             <Route path="/viewall" element={<ViewBlogs />} />
             <Route path="/viewblog/:id" element={<ViewBlog />} />
+            <Route path="/userblogs" element={<UserBlogs />} />
           </Routes>
         </Layout>
       </Router>

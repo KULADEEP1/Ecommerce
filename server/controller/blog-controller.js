@@ -35,20 +35,51 @@ const getAllBlogs = async (req, res) => {
 const getBlogData = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    // console.log(blog);
     if (!blog) {
       return res.status(404).json({ error: "Blog post not found" });
     }
     const isLiked = await Like.exists({
-          blogId: req.params.id,
-          userId: req.user.id,
-        });
+      blogId: req.params.id,
+      userId: req.user.id,
+    });
 
     const username = req.user.username;
-    res.status(201).json({ blog, username,isLiked });
+    res.status(201).json({ blog, username, isLiked });
   } catch (error) {
     res.status(500).json({ error: "Error while fetching blog post" });
   }
 };
 
-module.exports = { createBlog, getAllBlogs, getBlogData };
+const getUserBlogs = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const blogsData = await Blog.find({ author: username });
+    if (blogsData) {
+      res.status(201).json(blogsData);
+    } else {
+      res.status(404).json({ error: "No blogs found for this user" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Error while getting user blogs" });
+  }
+};
+
+const deleteBlog = async (req, res) => {
+  try {
+    const result = await Blog.deleteOne({ _id: req.params.id });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+    return res.status(201).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error while deleting blog." });
+  }
+};
+
+module.exports = {
+  createBlog,
+  getAllBlogs,
+  getBlogData,
+  getUserBlogs,
+  deleteBlog,
+};

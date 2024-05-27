@@ -5,6 +5,8 @@ const {
   createBlog,
   getAllBlogs,
   getBlogData,
+  getUserBlogs,
+  deleteBlog,
 } = require("../controller/blog-controller.js");
 const {
   newComment,
@@ -45,6 +47,10 @@ router.post("/newlike/:id", validateToken, addLike);
 
 router.delete("/removelike/:id", validateToken, removeLike);
 
+router.post("/userblogs", getUserBlogs);
+
+router.delete("/deleteblog/:id",validateToken,deleteBlog);
+
 router.post("/validate-token", validateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -57,7 +63,6 @@ router.post("/validate-token", validateToken, async (req, res) => {
     const timeLeft = expiryTime - currentTime;
     res.status(201).json({ isValid: true, user, timeLeft });
   } catch (error) {
-    // console.error("Token not validated server error:", error);
     res.status(500).json({ message: "Server error", isValid: false });
   }
 });

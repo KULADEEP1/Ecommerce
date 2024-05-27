@@ -10,7 +10,6 @@ const addLike = async (req, res) => {
     await newLike.save();
     res.status(201).json({ message: "Like Added Successfully !." });
   } catch (error) {
-    // console.log(error);
     res.status(500).json("Error while adding like from server side.");
   }
 };
@@ -24,7 +23,6 @@ const removeLike = async (req, res) => {
     }
     return res.status(201).json({ message: "Like Removed successfully" });
   } catch (error) {
-    // console.log(error);
     res
       .status(500)
       .json({ error: "Error while removing like from server side.." });

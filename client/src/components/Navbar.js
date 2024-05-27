@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -87,7 +87,17 @@ const Navbar = () => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [username, setUsername] = useState("");
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    }
+  }, [isAuthenticated]);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -99,6 +109,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     setAuthenticated(false);
     navigate("/login");
   };
@@ -149,7 +160,9 @@ const Navbar = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+                    <Avatar sx={{ width: 32, height: 32 }}>
+                      {username.charAt(0).toUpperCase()}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -165,7 +178,7 @@ const Navbar = () => {
                 <MenuItem onClick={() => navigate("/profile")}>
                   Profile
                 </MenuItem>
-                <MenuItem onClick={() => navigate("/account")}>
+                <MenuItem onClick={() => navigate("/userblogs")}>
                   My Blogs
                 </MenuItem>
                 <Divider />

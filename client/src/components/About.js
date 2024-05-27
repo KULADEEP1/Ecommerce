@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     padding: theme.spacing(10, 0),
-    // backgroundColor: "#1c1c1e",
     background: "linear-gradient(to bottom, #662d8c, #ed1e79)",
     color: "#fff",
     textAlign: "left",
@@ -101,7 +100,7 @@ function About() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/600x400/?team"
+                    image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
                     alt="Our Team"
                   />
                   <CardContent className={classes.cardContent}>
@@ -121,7 +120,7 @@ function About() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/600x400/?mission"
+                    image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
                     alt="Our Mission"
                   />
                   <CardContent className={classes.cardContent}>
@@ -141,7 +140,7 @@ function About() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/600x400/?vision"
+                    image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
                     alt="Our Vision"
                   />
                   <CardContent className={classes.cardContent}>

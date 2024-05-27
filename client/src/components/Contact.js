@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   formContainer: {
+    marginLeft:theme.spacing(2),
     padding: theme.spacing(4),
     backgroundColor: "#fff",
     borderRadius: 12,

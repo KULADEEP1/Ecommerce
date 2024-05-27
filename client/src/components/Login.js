@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "50px auto",
     padding: "30px",
     borderRadius: "10px",
-    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)", 
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
     backgroundColor: "#f5f5f5",
     transition: "transform 1s, box-shadow 1s",
     "&:hover": {
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 const styles = {
   root: {
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#ccc", 
+      borderColor: "#ccc",
     },
   },
 };
@@ -88,17 +88,17 @@ const Login = () => {
       if (response.status === 201) {
         toast.success("Login successful");
         const { token, user } = response.data;
-        // console.log(user);
         localStorage.setItem("token", token);
+        localStorage.setItem("username", user.username);
         setAuthenticated(true);
         navigate("/", { replace: true });
       } else {
         setAuthenticated(false);
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         toast.error("Login failed");
       }
     } catch (error) {
-      // console.error("There was an error logging in!", error);
       toast.error("Invalid Credentials!");
     }
   };

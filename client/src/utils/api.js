@@ -116,11 +116,15 @@ export const deleteCommentAPI = async (id, token) => {
 
 export const addLikeAPI = async (id, token) => {
   try {
-    const response = await api.post(`/newlike/${id}`,{}, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
+    const response = await api.post(
+      `/newlike/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     // console.log(error);
@@ -137,7 +141,27 @@ export const deleteLikeAPI = async (id, token) => {
     });
     return response;
   } catch (error) {
-    // console.log(error);
+    throw error;
+  }
+};
+export const getUserBlogsAPI = async (username) => {
+  try {
+    const response = await api.post("/userblogs", { username });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteBlogAPI = async (id, token) => {
+  try {
+    const response = await api.delete(`/deleteblog/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
     throw error;
   }
 };

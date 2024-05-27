@@ -126,6 +126,8 @@ function HomePage() {
   const { isAuthenticated } = useUser();
   const handleCreateBlog = () => {
     if (!isAuthenticated) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
       navigate("/login");
     } else {
       navigate("/create");
@@ -135,6 +137,7 @@ function HomePage() {
   const handleExploreButton = () => {
     if (!isAuthenticated) {
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
       navigate("/login");
     } else {
       navigate("/viewall");
@@ -182,7 +185,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?nature,dark"
+                    image="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"
                     alt="Nature"
                   />
                   <CardContent className={classes.cardContent}>
@@ -207,7 +210,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?technology,dark"
+                    image="https://images.unsplash.com/photo-1518770660439-4636190af475"
                     alt="Technology"
                   />
                   <CardContent className={classes.cardContent}>
@@ -232,7 +235,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?community,dark"
+                    image="https://images.unsplash.com/photo-1517841905240-472988babdf9"
                     alt="Community"
                   />
                   <CardContent className={classes.cardContent}>
@@ -257,7 +260,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?innovation,dark"
+                    image="https://images.unsplash.com/photo-1518770660439-4636190af475"
                     alt="Innovative"
                   />
                   <CardContent className={classes.cardContent}>
@@ -281,7 +284,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?travel,dark"
+                    image="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"
                     alt="Travel"
                   />
                   <CardContent className={classes.cardContent}>
@@ -305,7 +308,7 @@ function HomePage() {
                   <CardMedia
                     component="img"
                     className={classes.cardImage}
-                    image="https://source.unsplash.com/400x300/?health,dark"
+                    image="https://images.unsplash.com/photo-1514996937319-344454492b37"
                     alt="Health"
                   />
                   <CardContent className={classes.cardContent}>

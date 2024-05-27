@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     height: 550,
-    marginBottom:"15px",
+    marginBottom: "15px",
     [theme.breakpoints.down("sm")]: {
       height: "auto",
     },
@@ -40,15 +40,19 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    height: 520,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      height: 350,
+    },
   },
   cardTitle: {
     fontSize: "1.8rem",
     marginBottom: theme.spacing(1),
     color: "#222",
-    height:80,
+    height: 80,
     fontWeight: 600,
   },
   cardText: {
@@ -56,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#555",
     marginBottom: theme.spacing(2),
     flexGrow: 1,
-    minHeight: "100px", 
+    minHeight: "100px",
   },
   cardFooter: {
     display: "flex",
@@ -136,7 +140,7 @@ function BlogCard({ blog }) {
           {blog.title.substring(0, 30)}...
         </Typography>
         <Typography variant="subtitle1" className={classes.cardText}>
-          {blog.content.substring(0, 140)}...
+          {blog.content.substring(0, 120)}...
         </Typography>
         <Typography variant="subtitle2" className={classes.authorName}>
           By {blog.author} on {new Date(blog.publishDate).toLocaleDateString()}

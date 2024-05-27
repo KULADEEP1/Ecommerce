@@ -6,6 +6,7 @@ import {
   deleteCommentAPI,
   addLikeAPI,
   deleteLikeAPI,
+  deleteBlogAPI,
 } from "../../utils/api";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -17,10 +18,11 @@ import {
   Box,
   Button,
 } from "@material-ui/core";
-import { Favorite, FavoriteBorder } from "@material-ui/icons";
+import { Favorite, FavoriteBorder, Delete } from "@material-ui/icons";
 import CommentForm from "./comments/CommentForm";
 import Comment from "./comments/Comment";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
   // Responsive container for smaller screens
   containerResponsive: {
     maxWidth: "100%", // Set to 100% for screens <= 768px
-    "@media (max-width: 768px)": {  // Media query for responsiveness
+    "@media (max-width: 768px)": {
+      // Media query for responsiveness
       maxWidth: "100%",
     },
   },
@@ -78,6 +81,7 @@ const COMMENTS_BATCH_SIZE = 3;
 
 const ViewBlog = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [blog, setBlog] = useState({});
   const [allComments, setAllComments] = useState([]);
@@ -203,9 +207,24 @@ const ViewBlog = () => {
     }
   };
 
+  const handleBlogDelete = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await deleteBlogAPI(id, token);
+      if (response.status === 201) {
+        toast.success("Blog Deleted Successfully!");
+        navigate("/");
+      } else {
+        toast.error("Error while deleting blog.");
+      }
+    } catch (error) {
+      toast.error("Error while deleting blog from server side.");
+    }
+  };
+
   return (
     <div className={classes.root}>
-      <Container  maxWidth="xl">
+      <Container maxWidth="xl">
         <Box>
           <img
             src={`data:${blog.contentType};base64,${blog.imageBase64}`}
@@ -232,6 +251,16 @@ const ViewBlog = () => {
             >
               {isLiked ? <Favorite /> : <FavoriteBorder />}
             </IconButton>
+            {blog.author === currentUser && (
+              <IconButton
+                aria-label="delete"
+                onClick={handleBlogDelete}
+                className={classes.likeButton}
+                color="default"
+              >
+                <Delete />
+              </IconButton>
+            )}
             <Typography variant="body2" className={classes.publishDateText}>
               {new Date(blog.publishDate).toLocaleDateString()}
             </Typography>
@@ -240,11 +269,14 @@ const ViewBlog = () => {
             {blog.content}
           </Typography>
         </Box>
-        <CommentForm
-          blogId={id}
-          currentUser={currentUser}
-          onCommentAdded={handleCommentAdded}
-        />
+        {blog.author !== currentUser && (
+          <CommentForm
+            blogId={id}
+            author={blog.author}
+            currentUser={currentUser}
+            onCommentAdded={handleCommentAdded}
+          />
+        )}
         <div className={classes.commentsSection}>
           <Typography variant="h6">Comments</Typography>
           {displayedComments.length > 0 ? (
